@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    overflow-y: hidden;
+    overflow-x: auto;
+    font-family: sans-serif;
+    min-width: 240px;
+}
+
+header {
+    height: 70px;
+    background: #333;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.container {
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+nav {
+    width: 120px;
+    background: #eee;
+    /* padding: 10px; */
+}
+
+article {
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
+    /* overflow-y: auto; */
+}
