@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    padding: 5px;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+button {
+    all: unset;
+
+    display: flex;
+    align-items: center;
+
+    width: 140px;
+    padding:6px;
+    gap: 5px;
+
+    border: 2px solid #4a7bd1;
+    border-radius: 8px;
+
+    justify-content: center;
+}
+
+/* hover */
+button:hover {
+    cursor: pointer;
+    color: #4a7bd1;
+}
+
+/* focus TAB */
+button:focus {
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
