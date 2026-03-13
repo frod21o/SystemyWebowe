@@ -1,7 +1,7 @@
 :root {
     --header-hight: 70px;
     --nav-width: 120px;
-  }
+}
 
 * {
     box-sizing: border-box;
@@ -12,7 +12,7 @@ body {
     overflow: hidden;
     overflow-x: auto;
     font-family: sans-serif;
-    min-width: 740px;
+    min-width: 240px;
 }
 
 header {
