@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <title>Zadanie drugie
     </title>
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <style>
         body {
@@ -17,147 +19,93 @@
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h2 class="mb-4">Dodaj paczkę</h2>
+        <h2 class="mb-4">Dodaj paczkę</h2>
 
-    <!-- (f) formularz -->
-    <form id="packageForm" class="needs-validation" novalidate>
+        <!-- (f) formularz -->
+        <form id="packageForm" class="needs-validation" novalidate>
 
-        <div class="row mb-3">
-            <div class="col">
+            <div class="mb-3">
                 <label class="form-label">Nazwa</label>
-                <input type="text" class="form-control" id="name"
-                       maxlength="20" required>
+                <input type="text" class="form-control" id="name" maxlength="20" required>
                 <div class="invalid-feedback">
                     Podaj nazwę (max 20 znaków)
                 </div>
             </div>
-        </div>
 
-        <div class="row mb-3">
-            <div class="col">
-                <label class="form-label">Szerokość (cm)</label>
-                <input type="number" class="form-control" id="width"
-                       min="1" max="1000" required>
-                <div class="invalid-feedback">
-                    Wartość 1–1000
+            <div class="mb-3">
+                <label class="form-label">Szerokość</label>
+                <div class="input-group">
+                    <input type="number" class="form-control" id="width" min="1" max="1000" required>
+                    <span class="input-group-text">cm</span>
+                    <div class="invalid-feedback">
+                        Wartość 1–1000
+                    </div>
                 </div>
             </div>
 
-            <div class="col">
+            <div class="mb-3">
                 <label class="form-label">Wysokość (cm)</label>
-                <input type="number" class="form-control" id="height"
-                       min="1" max="1000" required>
-                <div class="invalid-feedback">
-                    Wartość 1–1000
+                <div class="input-group">
+                    <input type="number" class="form-control" id="height" min="1" max="1000" required>
+                    <span class="input-group-text">cm</span>
+                    <div class="invalid-feedback">
+                        Wartość 1–1000
+                    </div>
                 </div>
             </div>
 
-            <div class="col">
+            <div class="mb-3">
                 <label class="form-label">Głębokość (cm)</label>
-                <input type="number" class="form-control" id="depth"
-                       min="1" max="1000" required>
-                <div class="invalid-feedback">
-                    Wartość 1–1000
+                <div class="input-group">
+                    <input type="number" class="form-control" id="depth" min="1" max="1000" required>
+                    <span class="input-group-text">cm</span>
+                    <div class="invalid-feedback">
+                        Wartość 1–1000
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <button type="submit" class="btn btn-primary">Confirm</button>
-        <button type="reset" class="btn btn-secondary">Clear</button>
+            <button type="submit" class="btn btn-primary">Confirm</button>
+            <button type="reset" class="btn btn-secondary">Clear</button>
 
-    </form>
+        </form>
 
-    <hr class="my-4">
+        <hr class="my-4">
 
-    <!-- (g) wyszukiwanie -->
-    <input type="text" id="search" class="form-control mb-3"
-           placeholder="Szukaj paczki...">
+        <!-- (g) wyszukiwanie -->
+        <input type="text" id="search" class="form-control mb-3" placeholder="Szukaj paczki...">
 
-    <!-- tabela -->
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nazwa</th>
-                <th>Szer.</th>
-                <th>Wys.</th>
-                <th>Głęb.</th>
-                <th>Objętość (m³)</th>
-            </tr>
-        </thead>
+        <!-- tabela -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Szer.</th>
+                    <th>Wys.</th>
+                    <th>Głęb.</th>
+                    <th>Objętość (m³)</th>
+                </tr>
+                <tr class="border-bottom border-3 border-black">
+                </tr>
+            </thead>
 
-        <tbody id="tableBody"></tbody>
+            <tbody id="tableBody"></tbody>
 
-        <tfoot>
-            <tr>
-                <th colspan="4">Suma</th>
-                <th id="totalVolume">0.00</th>
-            </tr>
-        </tfoot>
-    </table>
+            <tfoot>
+                <tr class="border-bottom border-3 border-black">
+                </tr>
+                <tr>
+                    <th colspan="4">Suma</th>
+                    <th id="totalVolume">0.00</th>
+                </tr>
+            </tfoot>
+        </table>
 
-</div>
-
-<script>
-const form = document.getElementById("packageForm");
-const tableBody = document.getElementById("tableBody");
-const totalVolumeEl = document.getElementById("totalVolume");
-const searchInput = document.getElementById("search");
-
-let totalVolume = 0;
-
-// (c) walidacja + submit
-form.addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    if (!form.checkValidity()) {
-        form.classList.add("was-validated");
-        return;
-    }
-
-    const name = document.getElementById("name").value;
-    const w = parseInt(document.getElementById("width").value);
-    const h = parseInt(document.getElementById("height").value);
-    const d = parseInt(document.getElementById("depth").value);
-
-    // (e) objętość w m^3
-    let volume = (w * h * d) / 1000000;
-    volume = volume.toFixed(2);
-
-    totalVolume += parseFloat(volume);
-
-    // dodanie do tabeli
-    const row = document.createElement("tr");
-
-    row.innerHTML = `
-        <td>${name}</td>
-        <td>${w}</td>
-        <td>${h}</td>
-        <td>${d}</td>
-        <td>${volume}</td>
-    `;
-
-    tableBody.appendChild(row);
-
-    // aktualizacja sumy
-    totalVolumeEl.textContent = totalVolume.toFixed(2);
-
-    form.reset();
-    form.classList.remove("was-validated");
-});
-
-// (g) filtrowanie
-searchInput.addEventListener("input", function() {
-    const filter = this.value.toLowerCase();
-    const rows = tableBody.getElementsByTagName("tr");
-
-    for (let row of rows) {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(filter) ? "" : "none";
-    }
-});
-</script>
+    </div>
+    <script src="script.js"></script>
 
 </body>
+
 </html>
