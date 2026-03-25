@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notatnik</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-4">
+      <h4>Notatki</h4>
+      <ul id="notesList" class="list-group"></ul>
+      <button id="exportBtn" class="btn btn-sm btn-secondary mt-3">Export JSON</button>
+      <input type="file" id="importInput" class="form-control mt-2" />
+    </div>
+    <div class="col-8">
+      <h4>Edytor</h4>
+      <form id="noteForm">
+        <div class="mb-3">
+          <input type="text" id="title" class="form-control" placeholder="Tytuł" required>
+        </div>
+        <div class="mb-3">
+          <textarea id="content" class="form-control" rows="6" placeholder="Treść"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+class Note {
+  constructor(id, title, content) {
+    this.id = id;
+    this.title = title;
+    this.content = content;
+  }
+}
+
+class NotesStorage {
+  static KEY = 'notes_app_data';
+
+  static save(notes) {
+    localStorage.setItem(this.KEY, JSON.stringify(notes));
+  }
+
+  static load() {
+    const data = localStorage.getItem(this.KEY);
+    return data ? JSON.parse(data) : [];
+  }
+}
+
+class NotesApp {
+  constructor() {
+    this.notes = NotesStorage.load();
+    this.selectedId = null;
+
+    this.listEl = document.getElementById('notesList');
+    this.form = document.getElementById('noteForm');
+    this.titleInput = document.getElementById('title');
+    this.contentInput = document.getElementById('content');
+
+    this.exportBtn = document.getElementById('exportBtn');
+    this.importInput = document.getElementById('importInput');
+
+    this.bindEvents();
+    this.render();
+  }
+
+  bindEvents() {
+    this.form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.saveNote();
+    });
+
+    this.exportBtn.addEventListener('click', () => this.exportJSON());
+
+    this.importInput.addEventListener('change', (e) => this.importJSON(e));
+  }
+
+  generateId() {
+    return Date.now().toString() + Math.random().toString(16).slice(2);
+  }
+
+  saveNote() {
+    const title = this.titleInput.value.trim();
+    const content = this.contentInput.value.trim();
+
+    if (!title) return;
+
+    if (this.selectedId) {
+      const note = this.notes.find(n => n.id === this.selectedId);
+      note.title = title;
+      note.content = content;
+    } else {
+      const newNote = new Note(this.generateId(), title, content);
+      this.notes.push(newNote);
+    }
+
+    NotesStorage.save(this.notes);
+    this.resetForm();
+    this.render();
+  }
+
+  selectNote(id) {
+    const note = this.notes.find(n => n.id === id);
+    this.selectedId = id;
+    this.titleInput.value = note.title;
+    this.contentInput.value = note.content;
+  }
+
+  resetForm() {
+    this.selectedId = null;
+    this.form.reset();
+  }
+
+  render() {
+    this.listEl.innerHTML = '';
+    this.notes.forEach(note => {
+      const li = document.createElement('li');
+      li.className = 'list-group-item list-group-item-action';
+      li.textContent = note.title;
+      li.onclick = () => this.selectNote(note.id);
+      this.listEl.appendChild(li);
+    });
+  }
+
+  exportJSON() {
+    const blob = new Blob([JSON.stringify(this.notes, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'notes.json';
+    a.click();
+  }
+
+  importJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const imported = JSON.parse(e.target.result);
+        if (Array.isArray(imported)) {
+          this.notes = imported;
+          NotesStorage.save(this.notes);
+          this.render();
+        }
+      } catch {
+        alert('Błędny plik JSON');
+      }
+    };
+    reader.readAsText(file);
+  }
+}
+
+new NotesApp();
+</script>
+</body>
+</html>
