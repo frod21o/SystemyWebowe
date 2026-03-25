@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Zadanie 1</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background: #f0f0f0;
+    }
+
+    #slider {
+        width: 300px;
+        margin-bottom: 30px;
+    }
+
+    #circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: hsl(200, 70%, 50%);
+        color: white;
+        font-weight: bold;
+        transition: all 0.2s ease; /* (e) animacja */
+    }
+</style>
+</head>
+
+<body>
+
+<input type="range" id="slider" min="10" max="500" value="100">
+
+<div id="circle">100</div>
+
+<script>
+    const slider = document.getElementById("slider");
+    const circle = document.getElementById("circle");
+
+    function updateCircle(value) {
+        // (b) i (c) średnica = wartość suwaka
+        circle.style.width = value + "px";
+        circle.style.height = value + "px";
+
+        // (d) tekst w środku
+        circle.textContent = value;
+
+        // (f) jaśniejszy kolor dla większego koła
+        let lightness = 30 + (value / 500) * 50; // zakres ~30%–80%
+        circle.style.backgroundColor = `hsl(200, 70%, ${lightness}%)`;
+    }
+
+    // inicjalizacja
+    updateCircle(slider.value);
+
+    // zmiana podczas przesuwania
+    slider.addEventListener("input", () => {
+        updateCircle(slider.value);
+    });
+
+    // (g) obsługa klawiatury
+    document.addEventListener("keydown", (e) => {
+        let step = 5;
+
+        if (e.key === "ArrowRight") {
+            slider.value = Math.min(500, parseInt(slider.value) + step);
+            updateCircle(slider.value);
+        }
+
+        if (e.key === "ArrowLeft") {
+            slider.value = Math.max(10, parseInt(slider.value) - step);
+            updateCircle(slider.value);
+        }
+    });
+</script>
+
+</body>
+</html>
