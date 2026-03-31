@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 public class OrderHistory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
     private String customerName;
