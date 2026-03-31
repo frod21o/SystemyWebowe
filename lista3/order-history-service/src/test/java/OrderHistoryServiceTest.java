@@ -30,7 +30,6 @@ class OrderHistoryServiceTest {
 
     @BeforeEach
     void setUp() {
-        // Dzięki Lombok @Builder kod tworzenia obiektu jest dużo czystszy!
         sampleOrder = OrderHistory.builder()
                 .orderId(1L)
                 .customerName("Jan Kowalski")
