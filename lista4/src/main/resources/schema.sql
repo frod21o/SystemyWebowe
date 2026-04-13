@@ -63,3 +63,25 @@ alter table sql_event
 
 ALTER TABLE server ADD COLUMN created_date TIMESTAMP;
 ALTER TABLE server ADD COLUMN is_active BOOLEAN DEFAULT true;
+
+CREATE TABLE follower (
+    id BIGINT PRIMARY KEY,
+    user_id BIGINT,
+    subscription_date TIMESTAMP
+);
+
+CREATE TABLE comment (
+    id BIGINT PRIMARY KEY,
+    content TEXT,
+    follower_id BIGINT,
+    event_id BIGINT,
+    FOREIGN KEY (follower_id) REFERENCES follower(id)
+);
+
+-- CREATE TABLE comment_event (
+--     comment_id BIGINT,
+--     event_id BIGINT,
+--     PRIMARY KEY (comment_id, event_id),
+--     FOREIGN KEY (comment_id) REFERENCES comment(id),
+--     FOREIGN KEY (event_id) REFERENCES event(id)
+-- );

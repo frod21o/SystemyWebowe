@@ -47,20 +47,4 @@ public class Server {
         this.name = name;
         this.ip = ip;
     }
-//
-//    public Long getVersion(){
-//        //TODO: remove it
-//        return null;
-//    }
-
-//    public LocalDateTime getCreatedDate(){
-//        //TODO: remove it
-//        return null;
-//    }
-//
-//    public LocalDateTime getLastUpdateDate(){
-//        //TODO: remove it
-//        return null;
-//    }
-
 }

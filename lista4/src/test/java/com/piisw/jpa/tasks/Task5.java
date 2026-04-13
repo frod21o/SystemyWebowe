@@ -47,7 +47,6 @@ class Task5 {
 
     private void whenSerachingForNameReturn(String serverName, Server dummyServer) {
         when(serverService.findByName(serverName)).thenReturn(Optional.of(dummyServer));
-        // TODO: add your mock definition here
     }
 
     @TestConfiguration

@@ -44,5 +44,4 @@ public abstract class Event {
 
     @Column
     private boolean analysisRequired;
-
 }

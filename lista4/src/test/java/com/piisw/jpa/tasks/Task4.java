@@ -29,7 +29,7 @@ class Task4 {
         long expectedServer_3 = 11;
 
         // when
-        List<ServerStatistic> result = eventRepository.countEventsPerServer();// replace by repository method call
+        List<ServerStatistic> result = eventRepository.countEventsPerServer();
 
         // then
 
