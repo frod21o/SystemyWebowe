@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
     Page<Event> findByTimeBetweenAndAnalysisRequired(
@@ -29,8 +30,15 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     WHERE TYPE(e) = :clazz
     AND e.duration > :minDuration
 """)
-    int updateAnalysisRequiredForSubclass(
+    void updateAnalysisRequiredForSubclass(
             @Param("clazz") Class<? extends Event> clazz,
             @Param("minDuration") int minDuration
     );
+
+    @Query("""
+    SELECT   new com.piisw.jpa.repositories.ServerStatistic(e.server, COUNT(e))
+    FROM Event e
+    GROUP BY e.server.id
+""")
+    List<ServerStatistic> countEventsPerServer();
 }
