@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.when;
 
 @DataJpaTest
 class Task5 {
@@ -21,7 +23,8 @@ class Task5 {
     @Autowired
     private ServerService serverService;
 
-    @Autowired // TODO: configure as mockrepository
+    @MockitoBean
+    @Autowired
     private ServerRepository serverRepositoryMock;
 
     @Test
@@ -43,6 +46,7 @@ class Task5 {
     }
 
     private void whenSerachingForNameReturn(String serverName, Server dummyServer) {
+        when(serverService.findByName(serverName)).thenReturn(Optional.of(dummyServer));
         // TODO: add your mock definition here
     }
 
