@@ -1,0 +1,30 @@
+<form [formGroup]="form">
+
+  <input formControlName="title" placeholder="Tytuł" />
+  <div *ngIf="form.get('title')?.invalid && form.get('title')?.touched">
+    Błędny tytuł
+  </div>
+
+  <input formControlName="author" placeholder="Autor" />
+  <div *ngIf="form.get('author')?.invalid && form.get('author')?.touched">
+    Błędny autor
+  </div>
+
+  <input type="number" formControlName="year" placeholder="Rok" />
+  <div *ngIf="form.get('year')?.invalid && form.get('year')?.touched">
+    Błędny rok
+  </div>
+
+  <textarea formControlName="description" placeholder="Opis"></textarea>
+
+  <br><br>
+
+  <button (click)="save()" [disabled]="form.invalid || !form.dirty">
+    Save
+  </button>
+
+  <button (click)="cancel()">
+    Cancel
+  </button>
+
+</form>
