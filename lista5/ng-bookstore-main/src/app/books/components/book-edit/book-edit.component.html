@@ -1,30 +1,85 @@
-<form [formGroup]="form">
+<form [formGroup]="form" class="container my-4">
 
-  <input formControlName="title" placeholder="Tytuł" />
-  <div *ngIf="form.get('title')?.invalid && form.get('title')?.touched">
-    Błędny tytuł
+  <div class="card shadow-sm p-4">
+
+    <h4 class="mb-4">Edit book</h4>
+
+    <!-- Title -->
+    <div class="mb-3">
+      <label class="form-label">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="title"
+        placeholder="Input title"
+      />
+      <div class="text-danger small mt-1"
+           *ngIf="form.get('title')?.invalid && form.get('title')?.touched">
+        Invalid title
+      </div>
+    </div>
+
+    <!-- Author -->
+    <div class="mb-3">
+      <label class="form-label">Author</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="author"
+        placeholder="Input author"
+      />
+      <div class="text-danger small mt-1"
+           *ngIf="form.get('author')?.invalid && form.get('author')?.touched">
+        Invalid author
+      </div>
+    </div>
+
+    <!-- Year -->
+    <div class="mb-3">
+      <label class="form-label">Year of release</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="year"
+        placeholder="E.g. 2020"
+      />
+      <div class="text-danger small mt-1"
+           *ngIf="form.get('year')?.invalid && form.get('year')?.touched">
+        Invalid year
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-4">
+      <label class="form-label">Description</label>
+      <textarea
+        class="form-control"
+        rows="4"
+        formControlName="description"
+        placeholder="Short book description..."
+      ></textarea>
+    </div>
+
+    <!-- Actions -->
+    <div class="d-flex justify-content-end gap-2">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="save()"
+        [disabled]="form.invalid || !form.dirty"
+      >
+        Save
+      </button>
+    </div>
+
   </div>
-
-  <input formControlName="author" placeholder="Autor" />
-  <div *ngIf="form.get('author')?.invalid && form.get('author')?.touched">
-    Błędny autor
-  </div>
-
-  <input type="number" formControlName="year" placeholder="Rok" />
-  <div *ngIf="form.get('year')?.invalid && form.get('year')?.touched">
-    Błędny rok
-  </div>
-
-  <textarea formControlName="description" placeholder="Opis"></textarea>
-
-  <br><br>
-
-  <button (click)="save()" [disabled]="form.invalid || !form.dirty">
-    Save
-  </button>
-
-  <button (click)="cancel()">
-    Cancel
-  </button>
 
 </form>
