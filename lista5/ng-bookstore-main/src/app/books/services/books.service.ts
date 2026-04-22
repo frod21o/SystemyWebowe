@@ -18,10 +18,16 @@ export class BooksService {
   }
 
   findBookById(id: number): Observable<Book> {
-    return this.http.get<Book>(booksApiPrefix + `/${id}`);
+    return this.http.get<Book>(`${booksApiPrefix}/${id}`);
   }
 
   saveBook(id: number, book: any): Observable<Object> {
-    return this.http.put(booksApiPrefix + `/${id}`, book);
+    return this.http.put(`${booksApiPrefix}/${id}`, book);
+  }
+
+  searchBooks(query: string) {
+    return this.http.get<Book[]>(
+      `${booksApiPrefix}?q=${query}`
+    );
   }
 }

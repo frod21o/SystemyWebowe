@@ -2,9 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
 import { reviewResolver } from './review.resolver';
+import {Review} from "../model/review";
 
 describe('reviewResolver', () => {
-  const executeResolver: ResolveFn<boolean> = (...resolverParameters) => 
+  const executeResolver: ResolveFn<Review[]> = (...resolverParameters) =>
       TestBed.runInInjectionContext(() => reviewResolver(...resolverParameters));
 
   beforeEach(() => {
