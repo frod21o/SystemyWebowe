@@ -1,4 +1,4 @@
-import {Component, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ReviewService} from "../../services/review.service";
 import { ReactiveFormsModule } from '@angular/forms';
