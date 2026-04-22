@@ -1,0 +1,24 @@
+<div class="card p-3 mt-4 shadow-sm">
+  <h5>Add review</h5>
+
+  <form [formGroup]="form">
+    <input class="form-control mb-2"
+           placeholder="Title"
+           formControlName="title">
+
+    <textarea class="form-control mb-2"
+              placeholder="Description"
+              formControlName="description"></textarea>
+
+    <input type="number"
+           class="form-control mb-2"
+           min="1" max="5"
+           formControlName="rate">
+
+    <button class="btn btn-primary"
+            (click)="save()"
+            [disabled]="form.invalid">
+      Save
+    </button>
+  </form>
+</div>
